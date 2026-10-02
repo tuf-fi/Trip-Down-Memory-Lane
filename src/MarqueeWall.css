@@ -1,0 +1,266 @@
+:root {
+  --bg: #0b0b10;
+  --amber: #ffb648;
+  --amber-dim: #8a5a1f;
+  --text: #f5ead9;
+  color-scheme: dark;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+  margin: 0;
+  background: var(--bg);
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+.wall {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: 165vw;
+  height: 175vh;
+  transform: translate(-50%, -50%) rotate(-6deg);
+  display: grid;
+  grid-template-rows: repeat(4, 1fr);
+  gap: min(1.8vh, 18px);
+  will-change: transform;
+}
+
+.row {
+  position: relative;
+  overflow: hidden;
+  display: flex;
+  align-items: stretch;
+}
+
+
+/* Scroll position is driven by a requestAnimationFrame loop in JS (see
+   MarqueeWall.jsx), not a CSS @keyframes animation. Changing a running CSS
+   animation's `animation-duration` doesn't retime it smoothly — the browser
+   keeps the elapsed real time and reinterprets it against the new duration,
+   which shows up as a visible jump. Driving `transform` straight from JS
+   with a speed value that eases continuously avoids that entirely, so the
+   pause-on-hover and slow-motion-elsewhere effects stay smooth. */
+.track {
+  display: flex;
+  align-items: center;
+  width: max-content;
+}
+
+/* only the two center rows ("interactive") respond to hover/click — the top
+   and bottom rows are decorative background and keep scrolling untouched */
+
+/* Spacing lives on each slot (not a flex `gap`) so every item — including
+   the last one in each copy — occupies an identical width. That makes each
+   duplicated copy start at an EXACT fraction of the track, so the loop
+   restart lines up pixel-perfect with no stutter and no gap. */
+.card-slot {
+  flex: 0 0 auto;
+  position: relative;
+  height: 100%;
+  width: auto;
+  aspect-ratio: 3 / 4;
+  margin-right: min(1.1vw, 14px);
+}
+
+/* the inline marquee thumbnail. Clicking it hands off to the modal below —
+   framer-motion's shared `layoutId` animates the handoff (see MarqueeWall.jsx) */
+.card {
+  position: relative;
+  width: 100%;
+  height: 100%;
+}
+
+.row.interactive .card {
+  cursor: pointer;
+}
+
+.card-face {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
+}
+
+/* Front face: the image itself is kept slightly under 100% of the face
+   (rather than filling it exactly) so there's a sliver of headroom above
+   and below. The hover scale grows into that reserved headroom and still
+   lands inside the card's bounds — so it reads as the image actually
+   growing, not just a zoomed-in crop of it. */
+.card-front img {
+  height: 95%;
+  width: auto;
+  aspect-ratio: 3 / 4;
+  object-fit: cover;
+  border-radius: 10px;
+  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  -webkit-user-drag: none;
+  transform: scale(1);
+  filter: blur(0px);
+  transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
+}
+
+.row.interactive .card:hover .card-front img {
+  transform: scale(1.035);
+  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(245, 234, 217, 0.45);
+  z-index: 5;
+}
+
+/* Back face: the caption. Flipped 180° up front so that once the whole
+   `.card` rotates 180°, this face reads right-side-up to the viewer.
+   Light and flat on purpose — against the dark, blurred wall it reads as a
+   clean printed credit card rather than another dim poster. */
+.card-back {
+  transform: rotateY(180deg);
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  border-radius: 10px;
+  padding: 14px;
+  text-align: center;
+  background: var(--text);
+  border: 1px solid rgba(11, 11, 16, 0.08);
+  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
+}
+
+.card-eyebrow {
+  font-family: system-ui, sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 0.2em;
+  color: var(--amber-dim);
+  font-size: clamp(8px, 0.7vw, 10px);
+}
+
+.card-author {
+  font-family: system-ui, sans-serif;
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: var(--bg);
+  font-size: clamp(14px, 1.4vw, 19px);
+  line-height: 1.25;
+}
+
+.card-divider {
+  width: 28px;
+  height: 1px;
+  background: rgba(11, 11, 16, 0.15);
+}
+
+.card-meta {
+  font-family: system-ui, sans-serif;
+  color: var(--bg);
+  opacity: 0.55;
+  font-size: clamp(9px, 0.8vw, 11px);
+  line-height: 1.6;
+}
+
+/* hovering a main-row card blurs every other image on the wall (including
+   the decorative rows) to pull focus onto it */
+.wall:has(.row.interactive .card:hover) .card-slot:not(:has(.card:hover)) .card-front img {
+  filter: blur(4px);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card-front img {
+    transition: none;
+  }
+}
+
+/* --- modal: the opened card --- */
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  z-index: 50;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: rgba(5, 4, 2, 0.72);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  cursor: pointer;
+}
+
+.modal-card {
+  width: min(62vw, 340px);
+  aspect-ratio: 3 / 4;
+  perspective: 1600px;
+  cursor: pointer;
+}
+
+.modal-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  transform-style: preserve-3d;
+}
+
+.modal-card-inner .card-face {
+  border-radius: 14px;
+  overflow: hidden;
+}
+
+.modal-card-inner .card-front img {
+  height: 100%;
+  width: 100%;
+  aspect-ratio: auto;
+  box-shadow: none;
+}
+
+.modal-card-inner .card-back {
+  border-radius: 14px;
+  padding: clamp(18px, 3vw, 28px);
+}
+
+.modal-card-inner .card-author {
+  font-size: clamp(18px, 2.4vw, 26px);
+}
+
+.modal-card-inner .card-meta {
+  font-size: clamp(12px, 1.3vw, 14px);
+}
+
+.modal-close {
+  position: fixed;
+  top: clamp(14px, 3vw, 28px);
+  right: clamp(14px, 3vw, 28px);
+  z-index: 51;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 38px;
+  height: 38px;
+  border: 1px solid rgba(245, 234, 217, 0.18);
+  border-radius: 50%;
+  background: rgba(11, 11, 16, 0.5);
+  color: var(--text);
+  cursor: pointer;
+  transition: background-color 0.2s ease, border-color 0.2s ease, transform 0.2s ease;
+}
+
+.modal-close:hover {
+  background: rgba(11, 11, 16, 0.8);
+  border-color: rgba(245, 234, 217, 0.4);
+  transform: scale(1.06);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .modal-backdrop {
+    transition: none;
+  }
+}
+
+.glow {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  background: radial-gradient(ellipse at center, transparent 62%, rgba(11, 11, 16, 0.4) 100%);
+}
+
