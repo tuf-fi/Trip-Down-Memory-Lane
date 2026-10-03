@@ -106,6 +106,7 @@ export default function MarqueeWall() {
         if (!el) return
         s.singleWidth = el.scrollWidth / COPIES
         s.speed = s.singleWidth / s.duration
+        if (s.pos === 0 && s.dir > 0) s.pos = -s.singleWidth // right-moving rows start one copy to the left
       })
     }
 
@@ -130,8 +131,10 @@ export default function MarqueeWall() {
 
           if (s.singleWidth > 0) {
             s.pos += s.dir * s.speed * s.mult * dt
-            if (s.dir < 0 && s.pos <= -s.singleWidth) s.pos += s.singleWidth
-            if (s.dir > 0 && s.pos >= s.singleWidth) s.pos -= s.singleWidth
+            // keep pos in [-singleWidth, 0] for both directions so the track
+            // always covers the row (a right-moving row must never drift past 0)
+            if (s.pos <= -s.singleWidth) s.pos += s.singleWidth
+            if (s.pos > 0) s.pos -= s.singleWidth
           }
         }
 
