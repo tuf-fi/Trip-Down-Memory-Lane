@@ -13,7 +13,7 @@ const COPIES = 3 // duplicated copies per row track — guarantees the track is
 // pixel-perfect)
 
 const ITEMS = data.items
-const ROW_DURATIONS = [75, 105, 58, 118] // seconds for one copy-width to scroll by, at normal speed
+const ROW_DURATIONS = [113, 158, 87, 177] // seconds for one copy-width to scroll by, at normal speed
 const SLOW_MOTION_FACTOR = 0.2 // speed every non-active row eases to while something's active
 const EASE_TAU = 0.35 // seconds — how quickly speed eases toward its target
 
@@ -76,6 +76,7 @@ export default function MarqueeWall() {
 
   const closeCard = () => {
     openRowRef.current = null
+    hoveredRowRef.current = null
     setOpenImage(null)
   }
 
@@ -170,8 +171,15 @@ export default function MarqueeWall() {
                           className="card"
                           layoutId={img.key}
                           onClick={isMain ? () => openCard(img, i) : undefined}
-                          onMouseEnter={isMain ? () => (hoveredRowRef.current = i) : undefined}
-                          onMouseLeave={
+                          // touch taps emit a mouseenter with no matching mouseleave, so only real mice count as hover
+                          onPointerEnter={
+                            isMain
+                              ? (e) => {
+                                  if (e.pointerType === 'mouse') hoveredRowRef.current = i
+                                }
+                              : undefined
+                          }
+                          onPointerLeave={
                             isMain
                               ? () => {
                                   if (hoveredRowRef.current === i) hoveredRowRef.current = null
