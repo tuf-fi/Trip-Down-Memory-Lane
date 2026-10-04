@@ -13,7 +13,7 @@ const COPIES = 3 // duplicated copies per row track — guarantees the track is
 // pixel-perfect)
 
 const ITEMS = data.items
-const ROW_DURATIONS = [113, 158, 87, 177] // seconds for one copy-width to scroll by, at normal speed
+const ROW_DURATIONS = [200, 280, 155, 315] // seconds for one copy-width to scroll by, at normal speed
 const SLOW_MOTION_FACTOR = 0.2 // speed every non-active row eases to while something's active
 const EASE_TAU = 0.35 // seconds — how quickly speed eases toward its target
 

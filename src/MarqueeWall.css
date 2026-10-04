@@ -106,10 +106,13 @@ body,
   transition: transform 0.25s ease, box-shadow 0.25s ease, filter 0.25s ease;
 }
 
-.row.interactive .card:hover .card-front img {
-  transform: scale(1.035);
-  box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(245, 234, 217, 0.45);
-  z-index: 5;
+/* hover effects only on devices that truly hover — on touch, :hover sticks after a tap */
+@media (hover: hover) and (pointer: fine) {
+  .row.interactive .card:hover .card-front img {
+    transform: scale(1.035);
+    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(245, 234, 217, 0.45);
+    z-index: 5;
+  }
 }
 
 /* Back face: the caption. Flipped 180° up front so that once the whole
@@ -163,8 +166,10 @@ body,
 
 /* hovering a main-row card blurs every other image on the wall (including
    the decorative rows) to pull focus onto it */
-.wall:has(.row.interactive .card:hover) .card-slot:not(:has(.card:hover)) .card-front img {
-  filter: blur(4px);
+@media (hover: hover) and (pointer: fine) {
+  .wall:has(.row.interactive .card:hover) .card-slot:not(:has(.card:hover)) .card-front img {
+    filter: blur(4px);
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {
