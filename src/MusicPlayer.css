@@ -2,7 +2,7 @@
   position: fixed;
   top: 20px;
   right: 20px;
-  z-index: 100;
+  z-index: 40; /* above the wall, below the image modal (50) */
   display: flex;
   align-items: center;
   gap: 8px;
@@ -57,19 +57,19 @@
 }
 
 .play-btn {
-  background: linear-gradient(135deg, #ff9ec4 0%, #ff6fa5 100%);
+  background: var(--pink);
   color: #3a0d22;
   font-weight: 600;
-  box-shadow: 0 4px 16px rgba(255, 111, 165, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+  box-shadow: 0 4px 16px rgba(255, 133, 180, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
 }
 
 .play-btn:hover {
-  background: linear-gradient(135deg, #ffb3d1 0%, #ff82b3 100%);
-  box-shadow: 0 6px 22px rgba(255, 111, 165, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+  background: linear-gradient(135deg, #ffc4dc 0%, #ff98c0 100%);
+  box-shadow: 0 6px 22px rgba(255, 133, 180, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
 }
 
 .play-btn:focus-visible {
-  outline-color: #ffb3d1;
+  outline-color: #ffc4dc;
 }
 
 .play-icon {

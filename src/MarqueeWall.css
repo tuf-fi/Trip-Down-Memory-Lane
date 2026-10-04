@@ -3,6 +3,7 @@
   --amber: #ffb648;
   --amber-dim: #8a5a1f;
   --text: #f5ead9;
+  --pink: linear-gradient(135deg, #ffb0cf 0%, #ff85b4 100%);
   color-scheme: dark;
 }
 
@@ -11,7 +12,7 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  background: var(--bg);
+  background: var(--text);
   overflow: hidden;
   overscroll-behavior: none;
 }
@@ -25,7 +26,7 @@ body,
   transform: translate(-50%, -50%) rotate(-6deg);
   display: grid;
   grid-template-rows: repeat(4, 1fr);
-  gap: min(1.8vh, 18px);
+  gap: min(0.9vh, 9px);
   will-change: transform;
 }
 
@@ -63,7 +64,7 @@ body,
   height: 100%;
   width: auto;
   aspect-ratio: 3 / 4;
-  margin-right: min(1.1vw, 14px);
+  margin-right: min(0.6vw, 8px);
 }
 
 /* the inline marquee thumbnail. Clicking it hands off to the modal below —
@@ -94,12 +95,12 @@ body,
    lands inside the card's bounds — so it reads as the image actually
    growing, not just a zoomed-in crop of it. */
 .card-front img {
-  height: 95%;
+  height: 100%;
   width: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
   border-radius: 10px;
-  box-shadow: 0 6px 16px rgba(0, 0, 0, 0.5);
+  box-shadow: 0 4px 14px rgba(70, 45, 20, 0.28), 0 1px 3px rgba(70, 45, 20, 0.2);
   -webkit-user-drag: none;
   transform: scale(1);
   filter: blur(0px);
@@ -109,8 +110,8 @@ body,
 /* hover effects only on devices that truly hover — on touch, :hover sticks after a tap */
 @media (hover: hover) and (pointer: fine) {
   .row.interactive .card:hover .card-front img {
-    transform: scale(1.035);
-    box-shadow: 0 16px 32px rgba(0, 0, 0, 0.45), 0 0 0 1px rgba(245, 234, 217, 0.45);
+    transform: scale(1.01);
+    box-shadow: 0 8px 22px rgba(70, 45, 20, 0.4), 0 2px 5px rgba(70, 45, 20, 0.25);
     z-index: 5;
   }
 }
@@ -266,6 +267,6 @@ body,
   position: fixed;
   inset: 0;
   pointer-events: none;
-  background: radial-gradient(ellipse at center, transparent 62%, rgba(11, 11, 16, 0.4) 100%);
+  background: radial-gradient(ellipse at center, transparent 62%, rgba(245, 234, 217, 0.4) 100%);
 }
 

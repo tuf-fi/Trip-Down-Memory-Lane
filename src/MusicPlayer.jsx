@@ -10,15 +10,26 @@ export default function MusicPlayer() {
   const [playing, setPlaying] = useState(false)
   const [noteOpen, setNoteOpen] = useState(false)
   const [flipped, setFlipped] = useState(true)
+  // On close the shared-layout flight back into the button is skipped: `closing`
+  // drops the layoutId first, then the card unmounts and just fades out.
+  const [closing, setClosing] = useState(false)
+  const layoutId = closing ? undefined : 'note-card'
 
   const openNote = () => {
     setFlipped(true) // the open transition doubles as the flip to the message
+    setClosing(false)
     setNoteOpen(true)
   }
 
+  const closeNote = () => setClosing(true)
+
+  useEffect(() => {
+    if (closing) setNoteOpen(false)
+  }, [closing])
+
   useEffect(() => {
     if (!noteOpen) return
-    const onKey = (e) => e.key === 'Escape' && setNoteOpen(false)
+    const onKey = (e) => e.key === 'Escape' && closeNote()
     window.addEventListener('keydown', onKey)
     return () => window.removeEventListener('keydown', onKey)
   }, [noteOpen])
@@ -72,7 +83,7 @@ export default function MusicPlayer() {
         {!noteOpen && (
         <motion.button
           className="music-btn note-btn"
-          layoutId="note-card"
+          layoutId={layoutId}
           onClick={openNote}
           aria-label="Open birthday note"
           title="Open note"
@@ -101,7 +112,7 @@ export default function MusicPlayer() {
         {noteOpen && (
           <motion.div
             className="modal-backdrop note-backdrop"
-            onClick={() => setNoteOpen(false)}
+            onClick={closeNote}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
@@ -109,7 +120,8 @@ export default function MusicPlayer() {
           >
             <motion.div
               className="modal-card"
-              layoutId="note-card"
+              layoutId={layoutId}
+              exit={{ opacity: 0, scale: 0.92 }}
               onClick={(e) => {
                 e.stopPropagation()
                 setFlipped((f) => !f)
@@ -146,7 +158,7 @@ export default function MusicPlayer() {
               aria-label="Close"
               onClick={(e) => {
                 e.stopPropagation()
-                setNoteOpen(false)
+                closeNote()
               }}
             >
               <svg viewBox="0 0 24 24" width="20" height="20" aria-hidden="true">
