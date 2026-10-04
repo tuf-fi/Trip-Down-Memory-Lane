@@ -106,8 +106,8 @@ html {
   width: auto;
   aspect-ratio: 3 / 4;
   object-fit: cover;
-  border-radius: 10px;
-  box-shadow: 0 4px 14px rgba(70, 45, 20, 0.28), 0 1px 3px rgba(70, 45, 20, 0.2);
+  border-radius: 14px;
+  box-shadow: 0 6px 18px rgba(70, 45, 20, 0.22), 0 0 0 1px rgba(255, 255, 255, 0.35);
   -webkit-user-drag: none;
   transform: scale(1);
   filter: blur(0px);
@@ -132,44 +132,33 @@ html {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  gap: 10px;
-  border-radius: 10px;
-  padding: 14px;
+  gap: 18px;
+  border-radius: 18px;
+  padding: 24px;
   text-align: center;
-  background: var(--text);
-  border: 1px solid rgba(11, 11, 16, 0.08);
-  box-shadow: 0 20px 40px rgba(0, 0, 0, 0.35);
-}
-
-.card-eyebrow {
-  font-family: system-ui, sans-serif;
-  text-transform: uppercase;
-  letter-spacing: 0.2em;
-  color: var(--amber-dim);
-  font-size: clamp(8px, 0.7vw, 10px);
-}
-
-.card-author {
-  font-family: system-ui, sans-serif;
-  font-weight: 600;
-  letter-spacing: 0.01em;
-  color: var(--bg);
-  font-size: clamp(14px, 1.4vw, 19px);
-  line-height: 1.25;
+  background:
+    radial-gradient(circle at 20% 10%, rgba(255, 176, 207, 0.28) 0, transparent 55%),
+    radial-gradient(circle at 90% 95%, rgba(255, 182, 72, 0.22) 0, transparent 55%),
+    #fffaf3;
+  border: 1px solid rgba(255, 255, 255, 0.7);
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.35), inset 0 0 0 1px rgba(11, 11, 16, 0.04);
 }
 
 .card-divider {
-  width: 28px;
-  height: 1px;
-  background: rgba(11, 11, 16, 0.15);
+  width: 22px;
+  height: 2px;
+  border-radius: 2px;
+  background: linear-gradient(90deg, #ffb0cf, #ffb648);
+  opacity: 0.9;
 }
 
 .card-meta {
-  font-family: system-ui, sans-serif;
-  color: var(--bg);
-  opacity: 0.55;
-  font-size: clamp(9px, 0.8vw, 11px);
-  line-height: 1.6;
+  font-family: Georgia, 'Times New Roman', serif;
+  font-style: italic;
+  color: #3a2c2c;
+  font-size: clamp(11px, 1vw, 13px);
+  line-height: 1.7;
+  letter-spacing: 0.01em;
 }
 
 /* hovering a main-row card blurs every other image on the wall (including
@@ -216,7 +205,7 @@ html {
 }
 
 .modal-card-inner .card-face {
-  border-radius: 14px;
+  border-radius: 22px;
   overflow: hidden;
 }
 
@@ -224,20 +213,17 @@ html {
   height: 100%;
   width: 100%;
   aspect-ratio: auto;
+  border-radius: 22px;
   box-shadow: none;
 }
 
 .modal-card-inner .card-back {
-  border-radius: 14px;
-  padding: clamp(18px, 3vw, 28px);
-}
-
-.modal-card-inner .card-author {
-  font-size: clamp(18px, 2.4vw, 26px);
+  border-radius: 22px;
+  padding: clamp(24px, 4vw, 36px);
 }
 
 .modal-card-inner .card-meta {
-  font-size: clamp(12px, 1.3vw, 14px);
+  font-size: clamp(15px, 1.8vw, 19px);
 }
 
 .modal-close {

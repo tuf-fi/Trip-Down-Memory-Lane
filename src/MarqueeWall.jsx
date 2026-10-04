@@ -232,10 +232,9 @@ export default function MarqueeWall() {
                   <img src={openImage.src} alt="" draggable={false} />
                 </div>
                 <div className="card-face card-back">
-                  <span className="card-eyebrow">{openImage.item.date}</span>
-                  <span className="card-author">{openImage.item.title}</span>
                   <span className="card-divider" />
                   <span className="card-meta">{openImage.item.description}</span>
+                  <span className="card-divider" />
                 </div>
               </motion.div>
             </motion.div>
