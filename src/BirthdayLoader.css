@@ -1,0 +1,80 @@
+.bday {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  overflow: hidden;
+  display: grid;
+  place-items: center;
+  background:
+    radial-gradient(circle at 20% 15%, #ffe0ee 0, transparent 45%),
+    radial-gradient(circle at 85% 80%, #ffe9c4 0, transparent 45%),
+    linear-gradient(160deg, #fff4f8, #ffeaf2 55%, #fff1dc);
+  font-family: 'Trebuchet MS', 'Segoe UI', system-ui, sans-serif;
+  color: #7a2e55;
+}
+
+/* confetti */
+.bday-confetti {
+  position: absolute;
+  top: -20px;
+  width: 9px;
+  height: 14px;
+  border-radius: 2px;
+  animation: bday-fall linear infinite;
+}
+.bday-confetti.round { width: 9px; height: 9px; border-radius: 50%; }
+@keyframes bday-fall {
+  0%   { transform: translateY(0) rotate(0); opacity: 1; }
+  100% { transform: translateY(110vh) rotate(720deg); opacity: 0.8; }
+}
+
+/* image + bar form the centered group; message hangs off it */
+.bday-group {
+  position: relative;
+  z-index: 2;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+/* picture above the bar */
+.bday-pic {
+  display: block;
+  width: min(200px, 55vw);
+  height: auto;
+  margin: 0;
+}
+
+/* progress */
+.bday-bar {
+  position: relative;
+  width: min(320px, 78vw);
+  height: 4px;
+  border-radius: 99px;
+  background: #ffd3e5;
+}
+.bday-bar-fill {
+  height: 100%;
+  border-radius: 99px;
+  background: repeating-linear-gradient(-45deg, #ff85b4 0 12px, #ffa6c9 12px 24px);
+  background-size: 34px 100%;
+  animation: bday-stripes 0.8s linear infinite;
+}
+@keyframes bday-stripes { to { background-position: 34px 0; } }
+.bday-msg {
+  position: absolute;
+  top: 100%;
+  left: 50%;
+  transform: translateX(-50%);
+  white-space: nowrap;
+  margin: 14px 0 0;
+  font-size: 0.95rem;
+  letter-spacing: 0.04em;
+  opacity: 0.85;
+}
+.bday-msg b { margin-left: 4px; font-variant-numeric: tabular-nums; }
+
+
+@media (prefers-reduced-motion: reduce) {
+  .bday-confetti { animation: none; }
+}

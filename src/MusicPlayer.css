@@ -109,17 +109,76 @@
   height: 48px;
 }
 
-/* the message scrolls vertically if it outgrows the card, with no visible scrollbar */
+/* the note card is a bigger, taller sheet than the photo cards so the letter has room */
+.note-backdrop .modal-card {
+  width: min(90vw, 440px);
+  height: min(84vh, 640px);
+  aspect-ratio: auto;
+}
+
+/* soft stationery look: blush-to-cream paper, serif body, left-aligned like a real letter */
 .modal-card-inner .note-back {
+  display: flex;
+  flex-direction: column;
+  align-items: stretch;
+  justify-content: flex-start;
+  gap: 0;
+  padding: clamp(26px, 6vw, 38px) clamp(24px, 6vw, 36px);
+  text-align: left;
+  border: 1px solid rgba(255, 133, 180, 0.25);
+  border-radius: 20px;
+  background:
+    radial-gradient(circle at 12% 0%, #ffe3ee 0, transparent 50%),
+    radial-gradient(circle at 100% 100%, #ffecd0 0, transparent 50%),
+    #fff8f3;
+  box-shadow: 0 30px 70px rgba(122, 46, 85, 0.35);
   overflow-y: auto;
   overscroll-behavior: contain;
-  justify-content: flex-start;
   scrollbar-width: none;
   -ms-overflow-style: none;
 }
 
 .note-back::-webkit-scrollbar {
   display: none;
+}
+
+.modal-card-inner .note-back .card-author {
+  font-family: Georgia, 'Times New Roman', serif;
+  font-size: clamp(28px, 7vw, 36px);
+  font-weight: 600;
+  font-style: italic;
+  line-height: 1.15;
+  background: linear-gradient(90deg, #d6336c, #f08a5d);
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.note-back .card-divider {
+  width: 44px;
+  height: 3px;
+  margin: 18px 0 20px;
+  border-radius: 99px;
+  background: linear-gradient(90deg, #ff85b4, #ffb648);
+}
+
+.modal-card-inner .note-back .note-text {
+  font-family: system-ui, -apple-system, 'Segoe UI', sans-serif;
+  font-size: clamp(15px, 4vw, 16px);
+  line-height: 1.7;
+  color: #5b2a45;
+  opacity: 1;
+}
+
+.note-text p {
+  margin: 0 0 1.1em;
+}
+
+/* the closing line stands apart as a sign-off */
+.note-text p:last-child {
+  margin: 1.6em 0 0;
+  font-style: italic;
+  color: #c2457f;
 }
 
 /* margin:auto centers the content when it fits and lets it scroll from the top when it doesn't */

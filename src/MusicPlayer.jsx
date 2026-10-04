@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion'
 import note from './data/note.json'
 import './MusicPlayer.css'
 
-const SRC = encodeURI("/audio/Justin Bieber, Tems - I THINK YOU'RE SPECIAL (Audio).mp3")
+const SRC = encodeURI('/audio/New Year’s Day.mp3')
 
 export default function MusicPlayer() {
   const audioRef = useRef(null)
@@ -104,7 +104,7 @@ export default function MusicPlayer() {
               )}
             </svg>
           </span>
-          I Think You&rsquo;re Special
+          New Year&rsquo;s Day
         </button>
       </div>
 
@@ -140,14 +140,13 @@ export default function MusicPlayer() {
                   </svg>
                 </div>
                 <div className="card-face card-back note-back">
-                  <span className="card-eyebrow">{note.eyebrow}</span>
                   <span className="card-author">{note.title}</span>
                   <span className="card-divider" />
-                  <span className="card-meta">
-                    {note.message}
-                    <br />
-                    {note.signoff}
-                  </span>
+                  <div className="card-meta note-text">
+                    {note.message.map((para, i) => (
+                      <p key={i}>{para}</p>
+                    ))}
+                  </div>
                 </div>
               </motion.div>
             </motion.div>

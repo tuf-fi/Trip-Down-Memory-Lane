@@ -12,9 +12,16 @@ body,
 #root {
   height: 100%;
   margin: 0;
-  background: var(--text);
   overflow: hidden;
   overscroll-behavior: none;
+}
+
+/* same backdrop as the birthday loader */
+html {
+  background:
+    radial-gradient(circle at 20% 15%, #ffe0ee 0, transparent 45%),
+    radial-gradient(circle at 85% 80%, #ffe9c4 0, transparent 45%),
+    linear-gradient(160deg, #fff4f8, #ffeaf2 55%, #fff1dc);
 }
 
 .wall {

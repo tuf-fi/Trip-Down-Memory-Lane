@@ -13,7 +13,7 @@ const COPIES = 3 // duplicated copies per row track — guarantees the track is
 // pixel-perfect)
 
 const ITEMS = data.items
-const ROW_DURATIONS = [200, 280, 155, 315] // seconds for one copy-width to scroll by, at normal speed
+const ROW_DURATIONS = [600, 840, 465, 945] // seconds for one copy-width to scroll by, at normal speed
 const SLOW_MOTION_FACTOR = 0.2 // speed every non-active row eases to while something's active
 const EASE_TAU = 0.35 // seconds — how quickly speed eases toward its target
 
@@ -30,11 +30,12 @@ function buildRow(rowIndex) {
   const mainSlot = MAIN_ROWS.indexOf(rowIndex)
   const isMain = mainSlot !== -1
 
-  // main rows: the JSON items, dealt out alternately across the main rows
+  // main rows: the JSON items split into consecutive halves, one half per main row
   // decor rows: random images from the same pool, no captions
   let unique
   if (isMain) {
-    unique = ITEMS.filter((_, i) => i % MAIN_ROWS.length === mainSlot)
+    const half = Math.ceil(ITEMS.length / MAIN_ROWS.length)
+    unique = ITEMS.slice(mainSlot * half, (mainSlot + 1) * half)
   } else {
     const pool = []
     while (pool.length < DECOR_PER_ROW) pool.push(...shuffled(ITEMS))
