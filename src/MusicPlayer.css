@@ -1,0 +1,132 @@
+.music-bar {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  z-index: 100;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 6px;
+  background: rgba(20, 20, 26, 0.55);
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  border-radius: 999px;
+  backdrop-filter: blur(16px) saturate(140%);
+  -webkit-backdrop-filter: blur(16px) saturate(140%);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.35);
+}
+
+.music-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  font-family: system-ui, sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.02em;
+  color: var(--text);
+  background: transparent;
+  border: none;
+  border-radius: 999px;
+  height: 36px;
+  padding: 0 16px;
+  cursor: pointer;
+  transition: background 0.2s ease, color 0.2s ease, transform 0.15s ease;
+}
+
+.music-btn:hover {
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.music-btn:active {
+  transform: scale(0.96);
+}
+
+.music-btn:focus-visible {
+  outline: 2px solid var(--amber);
+  outline-offset: 2px;
+}
+
+.note-btn {
+  width: 36px;
+  padding: 0;
+}
+
+.note-btn svg {
+  width: 18px;
+  height: 18px;
+}
+
+.play-btn {
+  background: linear-gradient(135deg, #ff9ec4 0%, #ff6fa5 100%);
+  color: #3a0d22;
+  font-weight: 600;
+  box-shadow: 0 4px 16px rgba(255, 111, 165, 0.35), inset 0 1px 0 rgba(255, 255, 255, 0.4);
+}
+
+.play-btn:hover {
+  background: linear-gradient(135deg, #ffb3d1 0%, #ff82b3 100%);
+  box-shadow: 0 6px 22px rgba(255, 111, 165, 0.5), inset 0 1px 0 rgba(255, 255, 255, 0.5);
+}
+
+.play-btn:focus-visible {
+  outline-color: #ffb3d1;
+}
+
+.play-icon {
+  display: inline-flex;
+  margin-right: 8px;
+}
+
+.play-icon svg {
+  width: 12px;
+  height: 12px;
+}
+
+@media (max-width: 480px) {
+  .music-bar {
+    top: 12px;
+    right: 12px;
+  }
+  .music-btn {
+    font-size: 12px;
+    padding: 0 12px;
+  }
+}
+
+.note-backdrop {
+  z-index: 200;
+}
+
+.note-front {
+  border-radius: 14px;
+  background: rgba(11, 11, 16, 0.9);
+  border: 1px solid rgba(245, 234, 217, 0.18);
+  color: var(--amber);
+}
+
+.note-front svg {
+  width: 48px;
+  height: 48px;
+}
+
+/* the message scrolls vertically if it outgrows the card, with no visible scrollbar */
+.modal-card-inner .note-back {
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  justify-content: flex-start;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.note-back::-webkit-scrollbar {
+  display: none;
+}
+
+/* margin:auto centers the content when it fits and lets it scroll from the top when it doesn't */
+.note-back > :first-child {
+  margin-top: auto;
+}
+
+.note-back > :last-child {
+  margin-bottom: auto;
+}
